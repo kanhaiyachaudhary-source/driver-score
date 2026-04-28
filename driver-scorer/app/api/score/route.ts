@@ -1,23 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { calculateDriverScore } from '@/lib/scoring';
 
-// Simple in-memory history (resets on server restart — fine for demo)
 const history: any[] = [];
 
 export const runtime = 'nodejs';
 
-/**
- * POST /api/score
- *
- * Accepts EITHER:
- *   - JSON body: { name, dob, license_number, email, document_base64? }
- *   - multipart/form-data: name, dob, license_number, email, document (file)
- *
- * Returns:
- *   { request_id, name, dob, license_number, email,
- *     is_good_driver, risk_level, risk_description, driver_score,
- *     reasons, mvr_summary, scored_at }
- */
 export async function POST(req: NextRequest) {
   try {
     const contentType = req.headers.get('content-type') || '';
@@ -52,8 +39,8 @@ export async function POST(req: NextRequest) {
     }
 
     const scoring = calculateDriverScore(license_number);
-
     const requestId = generateRequestId(license_number);
+
     const response = {
       request_id: requestId,
       name: name || scoring.mvr_summary.name || null,
