@@ -102,6 +102,3 @@ function generateRequestId(seed: string): string {
   return `${ts}-${rand}`.toUpperCase();
 }
 
-export function getHistory() {
-  return history;
-}
