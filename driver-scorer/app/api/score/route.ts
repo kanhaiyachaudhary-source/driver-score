@@ -101,4 +101,3 @@ function generateRequestId(seed: string): string {
   const rand = Math.random().toString(36).substring(2, 6);
   return `${ts}-${rand}`.toUpperCase();
 }
-
